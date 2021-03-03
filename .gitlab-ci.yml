@@ -1,0 +1,24 @@
+image: docker:19.03.12
+
+stages:
+  - test
+  - build
+  - push
+
+unittest:
+  stage: test
+  script:
+    - echo "Application unittest"
+
+docker-build:
+  stage: build
+  script:
+    - echo "Build application"
+    - docker build -t my-docker-image .
+
+docker-push:
+  stage: push
+  script:
+    - echo "Publish on dockerhub"
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+    - docker push cycloid/demo-gitlab-wordpress:latest
